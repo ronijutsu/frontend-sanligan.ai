@@ -22,14 +22,10 @@ const route = useRoute()
 const destination = computed(() => (route.query.next as string) || auth.homePath())
 
 /**
- * A gateway return, rather than a code redemption. The two gateways each
- * stamp their own name on the query, matching the success URL the API builds.
+ * A gateway return, rather than a code redemption, matching the success URL
+ * the API builds.
  */
-const fromCheckout = computed(
-  () => route.query.paymongo === 'return'
-    || route.query.lemonsqueezy === 'return'
-    || route.query.paypal === 'return',
-)
+const fromCheckout = computed(() => route.query.paymongo === 'return')
 
 const loading = ref(true)
 /** Payment landed but the webhook has not; the page holds rather than thanks. */

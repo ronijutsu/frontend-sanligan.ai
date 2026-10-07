@@ -183,7 +183,12 @@ onMounted(() => {
       <!-- The brand mark, not the account — the account lives at the bottom of the rail. -->
       <SidebarMenu>
         <SidebarMenuItem>
-          <SidebarMenuButton as-child :is-active="isActive('/chat')" tooltip="Batayan">
+          <SidebarMenuButton
+            as-child
+            :is-active="isActive('/chat')"
+            tooltip="Batayan"
+            class="group-data-[collapsible=icon]:p-0!"
+          >
             <NuxtLink to="/chat">
               <span class="flex size-8 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
                 <BatayanMark class="size-5" slab-class="fill-peach dark:fill-current" />
