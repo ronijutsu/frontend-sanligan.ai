@@ -57,12 +57,7 @@ function formatCount(value: number | null) {
 
 const gatewayLabel: Record<string, string> = {
   paymongo: 'PayMongo',
-  lemonsqueezy: 'Lemon Squeezy',
-  paypal: 'PayPal',
 }
-
-const planChangeReturn = computed(() => route.query.paypal === 'plan-change-return')
-const planChangeCancelled = computed(() => route.query.paypal === 'plan-change-cancelled')
 
 async function handleCancel() {
   if (!sub.value) return
@@ -108,35 +103,9 @@ onMounted(async () => {
   ])
   loading.value = false
 
-  if (planChangeReturn.value) {
-    confirmingPayment.value = true
-    const planId = typeof route.query.plan === 'string' ? route.query.plan : null
-    const changed = planId
-      ? await billing.waitForSubscriptionPlan(planId).catch(() => false)
-      : false
-    confirmingPayment.value = false
-
-    if (changed) {
-      toast.success('Your plan has been updated')
-    } else {
-      toast.info('Your plan change is being confirmed. Check back shortly.')
-    }
-    return
-  }
-
-  if (planChangeCancelled.value) {
-    try {
-      await billing.cancelPlanChange()
-      toast.info('Your plan change was cancelled')
-    } catch (err: any) {
-      toast.error(err?.data?.message ?? 'Could not cancel the pending plan change')
-    }
-    return
-  }
-
-  // Checkouts return to `/welcome` now. This stays for sessions that were
-  // already in flight against the old success URL, which still point here.
-  if (route.query.paymongo === 'return' || route.query.lemonsqueezy === 'return' || route.query.paypal === 'return') {
+  // Checkouts return to `/welcome` now; this stays for a session that was
+  // already in flight against the old success URL, which still points here.
+  if (route.query.paymongo === 'return') {
     confirmingPayment.value = true
     const active = await billing.waitForActiveSubscription().catch(() => false)
     confirmingPayment.value = false
@@ -377,7 +346,7 @@ async function handleRemoveSeats() {
           <Loader2Icon class="size-5 animate-spin text-primary" />
           <div>
             <p class="text-sm font-medium">
-              {{ planChangeReturn ? 'Confirming your plan change…' : 'Confirming your payment…' }}
+              Confirming your payment…
             </p>
             <p class="text-xs text-muted-foreground">This can take a few seconds.</p>
           </div>

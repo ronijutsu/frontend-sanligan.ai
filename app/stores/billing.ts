@@ -132,7 +132,7 @@ export interface Subscription {
   id: string
   organization_id: string | null
   status: string
-  gateway: 'paymongo' | 'lemonsqueezy' | 'paypal' | null
+  gateway: 'paymongo' | null
   interval: BillingInterval
   plan: Plan | null
   pending_plan_id: string | null
@@ -401,8 +401,8 @@ export const useBillingStore = defineStore('billing', () => {
 
     for (;;) {
       const sub = await fetchSubscription()
-      // Require an active status, not just the plan id: an approval-pending
-      // PayPal revision must never count as success.
+      // Require an active status, not just the plan id: a plan change that is
+      // still settling must never count as success.
       if (sub?.plan?.id === planId && sub?.status === 'active') return true
       if (Date.now() >= deadline) return false
       await new Promise(resolve => setTimeout(resolve, 1500))

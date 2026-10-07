@@ -130,7 +130,7 @@ async function joinWorkspace(invite: OrgInvitation) {
 
 /**
  * Emergency kill switch for checkout while provider credentials are rotated.
- * PayPal is live by default; referral-code redemption remains available either way.
+ * Referral-code redemption remains available either way.
  */
 const gatewayFinalizing = ref(false)
 const referralCode = ref('')
@@ -641,7 +641,7 @@ onMounted(async () => {
           Simple pricing for your practice
         </h1>
         <p class="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-           Pay per account. Cancel or switch plans any time. Secure checkout via PayPal.
+           Pay per account. Cancel or switch plans any time. Secure checkout via PayMongo.
         </p>
         <div class="mt-6 inline-flex items-center rounded-full border bg-muted/40 p-1 text-sm">
           <button
@@ -910,7 +910,7 @@ onMounted(async () => {
       >
         <span>No contract, cancel any time</span>
         <span aria-hidden="true" class="text-muted-foreground/40">·</span>
-         <span>Secure checkout via PayPal</span>
+         <span>Secure checkout via PayMongo</span>
         <span aria-hidden="true" class="text-muted-foreground/40">·</span>
         <span>All prices in Philippine pesos</span>
         <span aria-hidden="true" class="text-muted-foreground/40">·</span>
@@ -960,7 +960,7 @@ onMounted(async () => {
               {{ processing ? 'Preparing checkout…' : `Pay ${billedLabel(selectedPlan, selectedInterval)}` }}
             </Button>
             <p class="text-center text-xs text-muted-foreground">
-               You'll be taken to PayPal's secure payment page to complete your subscription. Cards accepted.
+               You'll be taken to PayMongo's secure payment page to complete your subscription. Cards accepted.
             </p>
           </CardContent>
         </Card>
